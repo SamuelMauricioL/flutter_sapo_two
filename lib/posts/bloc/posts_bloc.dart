@@ -31,8 +31,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     Emitter<PostsState> emit,
   ) async {
     emit(PostsLoading());
-    final result =
-        await _getPostsUseCase(const GetPostsParams(limit: 30, offset: 0));
+    final result = await _getPostsUseCase(const GetPostsParams(limit: 30));
     result.when(
       ok: (posts) => emit(
         PostsLoaded(
@@ -52,7 +51,10 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       final currentState = state as PostsLoaded;
       if (!currentState.hasReachedMax) {
         final result = await _getPostsUseCase(
-          GetPostsParams(limit: 30, offset: currentState.posts.length),
+          GetPostsParams(
+            limit: 30,
+            lastDocumentId: currentState.posts.last.id,
+          ),
         );
         result.when(
           ok: (newPosts) => emit(
@@ -85,7 +87,9 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
           }).toList();
           emit(currentState.copyWith(posts: updatedPosts));
         },
-        err: (failure) => emit(PostsError(message: failure.message)),
+        err: (failure) => emit(
+          PostActionError(message: failure.message),
+        ),
       );
     }
   }
@@ -108,7 +112,9 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
           }).toList();
           emit(currentState.copyWith(posts: updatedPosts));
         },
-        err: (failure) => emit(PostsError(message: failure.message)),
+        err: (failure) => emit(
+          PostActionError(message: failure.message),
+        ),
       );
     }
   }

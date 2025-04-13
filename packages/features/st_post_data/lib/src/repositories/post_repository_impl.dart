@@ -9,9 +9,15 @@ class PostRepositoryImpl implements PostRepository {
   final PostRemoteDataSource remoteDataSource;
 
   @override
-  Future<Result<List<Post>, StFailure>> getPosts(int limit, int offset) async {
+  Future<Result<List<Post>, StFailure>> getPosts({
+    int limit = 10,
+    String? lastDocumentId,
+  }) async {
     try {
-      final result = await remoteDataSource.getPosts(limit, offset);
+      final result = await remoteDataSource.getPosts(
+        limit: limit,
+        lastDocumentId: lastDocumentId,
+      );
       return Ok(result.map((model) => model.toEntity()).toList());
     } catch (e) {
       return const Err(ServerFailure());

@@ -7,12 +7,15 @@ class GetPostsUseCase {
   final PostRepository repository;
 
   Future<Result<List<Post>, StFailure>> call(GetPostsParams params) {
-    return repository.getPosts(params.limit, params.offset);
+    return repository.getPosts(
+      limit: params.limit,
+      lastDocumentId: params.lastDocumentId,
+    );
   }
 }
 
 class GetPostsParams {
-  const GetPostsParams({required this.limit, required this.offset});
+  const GetPostsParams({required this.limit, this.lastDocumentId});
   final int limit;
-  final int offset;
+  final String? lastDocumentId;
 }

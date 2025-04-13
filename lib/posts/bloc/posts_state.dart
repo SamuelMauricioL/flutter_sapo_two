@@ -13,7 +13,6 @@ class PostsLoading extends PostsState {}
 
 class PostsLoaded extends PostsState {
   const PostsLoaded({required this.posts, this.hasReachedMax = false});
-
   final List<Post> posts;
   final bool hasReachedMax;
 
@@ -33,7 +32,14 @@ class PostsLoaded extends PostsState {
 
 class PostsError extends PostsState {
   const PostsError({required this.message});
+  final String message;
 
+  @override
+  List<Object?> get props => [message];
+}
+
+class PostActionError extends PostsState {
+  const PostActionError({required this.message});
   final String message;
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sapo_two/di/injection_container.dart';
@@ -27,21 +29,33 @@ class PostsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Posts'),
-      ),
-      body: BlocBuilder<PostsBloc, PostsState>(
-        builder: (context, state) {
-          return switch (state) {
-            PostsLoading() => const StLoadingIndicator(),
-            PostsLoaded(hasReachedMax: false) =>
-              PostListView(posts: state.posts),
-            PostsError(:final String message) =>
-              StErrorMessage(message: message),
-            _ => const SizedBox.shrink(),
-          };
-        },
+    return BlocListener<PostsBloc, PostsState>(
+      listener: (context, state) {
+        if (state is PostActionError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Posts'),
+        ),
+        body: BlocBuilder<PostsBloc, PostsState>(
+          builder: (context, state) {
+            return switch (state) {
+              PostsLoading() => const StLoadingIndicator(),
+              PostsLoaded(
+                :final List<Post> posts,
+                :final bool hasReachedMax,
+              ) =>
+                PostListView(posts: posts),
+              PostsError(:final String message) =>
+                StErrorMessage(message: message),
+              _ => const SizedBox.shrink(),
+            };
+          },
+        ),
       ),
     );
   }

@@ -13,7 +13,6 @@ class PostsLoadMorePosts extends PostsEvent {}
 
 class PostsLikePost extends PostsEvent {
   const PostsLikePost(this.postId);
-  // Changed class name
   final String postId;
 
   @override
@@ -22,7 +21,6 @@ class PostsLikePost extends PostsEvent {
 
 class PostsDislikePost extends PostsEvent {
   const PostsDislikePost(this.postId);
-  // Changed class name
   final String postId;
 
   @override

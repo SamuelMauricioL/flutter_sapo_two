@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:st_post_data/src/models/post_model.dart';
 
 abstract class PostRemoteDataSource {
-  Future<List<PostModel>> getPosts(int limit, int offset);
+  Future<List<PostModel>> getPosts({
+    int limit = 30,
+    String? lastDocumentId,
+  });
   Future<void> likePost(String postId);
   Future<void> dislikePost(String postId);
 }
@@ -12,17 +15,25 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<List<PostModel>> getPosts(int limit, int offset) async {
-    final snapshot = await _firestore
+  Future<List<PostModel>> getPosts({
+    int limit = 30,
+    String? lastDocumentId,
+  }) async {
+    var postsQuery = _firestore
         .collection('posts')
         .orderBy('timestamp', descending: true)
-        .limit(limit)
-        .startAfter([offset]).get();
+        .limit(limit);
+
+    if (lastDocumentId != null) {
+      final lastDocument =
+          await _firestore.collection('posts').doc(lastDocumentId).get();
+      postsQuery = postsQuery.startAfterDocument(lastDocument);
+    }
+
+    final snapshot = await postsQuery.get();
 
     return snapshot.docs
-        .map(
-          (doc) => PostModel.fromJson(doc.id, doc.data()),
-        )
+        .map((doc) => PostModel.fromJson(doc.id, doc.data()))
         .toList();
   }
 
