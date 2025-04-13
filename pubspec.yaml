@@ -9,6 +9,7 @@ environment:
 dependencies:
   bloc: ^8.1.4
   cloud_firestore: ^5.6.6
+  equatable: ^2.0.7
   firebase_core: ^3.13.0
   flutter:
     sdk: flutter
@@ -16,6 +17,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
+  st_post_data:
+    path: packages/features/st_post_data
+  st_post_domain:
+    path: packages/features/st_post_domain
 
 dev_dependencies:
   bloc_test: ^9.1.7
