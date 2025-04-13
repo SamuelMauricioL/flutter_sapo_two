@@ -16,11 +16,16 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
+  get_it: 8.0.3
   intl: ^0.19.0
   st_post_data:
     path: packages/features/st_post_data
   st_post_domain:
     path: packages/features/st_post_domain
+  st_ui:
+    path: packages/core/st_ui
+  st_utils:
+    path: packages/core/st_utils
 
 dev_dependencies:
   bloc_test: ^9.1.7

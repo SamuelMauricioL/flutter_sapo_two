@@ -2,8 +2,8 @@ import 'package:oxidized/oxidized.dart';
 import 'package:st_post_domain/st_post_domain.dart';
 import 'package:st_utils/st_utils.dart';
 
-class GetPosts {
-  GetPosts({required this.repository});
+class GetPostsUseCase {
+  GetPostsUseCase({required this.repository});
   final PostRepository repository;
 
   Future<Result<List<Post>, StFailure>> call(GetPostsParams params) {
