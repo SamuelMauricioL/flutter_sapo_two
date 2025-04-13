@@ -128,3 +128,10 @@ Clean architecture based-on-packages with a feature-first approach.
 - **Posts Feature - Domain Layer (Internal Package):** `st_post_domain` (located at `packages/features/st_post_domain`)
 - **Firebase Core:** [firebase_core](https://pub.dev/packages/firebase_core)
 - **Cloud Firestore:** [cloud_firestore](https://pub.dev/packages/cloud_firestore)
+
+## Demo
+
+
+https://github.com/user-attachments/assets/b6c925e2-73b9-4cd4-8c7b-28082adcaff1
+
+
