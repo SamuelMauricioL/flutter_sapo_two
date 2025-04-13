@@ -21,7 +21,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }) async {
     var postsQuery = _firestore
         .collection('posts')
-        .orderBy('timestamp', descending: true)
+        .orderBy('timestamp', descending: false)
         .limit(limit);
 
     if (lastDocumentId != null) {
